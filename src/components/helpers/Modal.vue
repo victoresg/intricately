@@ -7,17 +7,19 @@
             <button @click="closeModal" class="mb-3 close-btn">x</button>
             <span class="mb-3">ADDITIONAL NOTES</span>
           </div>
+          <label for="todoitem">Todo Item</label>
           <textarea 
+            id="todoitem"
             rows="8" 
             cols="80"
             placeholder="e.g Good Tech Company"
-            v-model="textArea"
+            v-model="input"
             class="p-2"
           >
           </textarea>
         </div>
         <div class="row d-flex justify-content-end mt-5">
-          <button class="col-md-2 p-1 mr-3 modal-btn">SAVE</button>
+          <button @click="add" class="col-md-2 p-1 mr-3 modal-btn">SAVE</button>
         </div>
       </div>
     </div>
@@ -25,23 +27,34 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'Modal',
   props: {
     show: {
       type: Boolean,
       default: () => true
-    },
-    textArea: {
-      type: String,
-      default: () => ''
     }
   },
+  data: () => ({
+    currentList: [],
+    input: ""
+  }),
+  computed: {
+    ...mapState(['list'])
+  },
   methods: {
+    ...mapActions(['setList']),
     closeModal () {
       setTimeout(() => {
         this.$emit('close')
       }, 200)
+    },
+    add() {
+      this.currentList.push(this.input)
+      this.setList(this.currentList)
+      this.input = ""
     }
   }
 }
@@ -49,7 +62,7 @@ export default {
 
 <style lang="scss" scoped>
   .modal {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;

@@ -14,7 +14,11 @@
     "node-sass": "^4.12.0",
     "v-money": "^0.8.1",
     "vue": "^2.6.10",
-    "vuelidate": "^0.7.4"
+    "vue-airbnb-style-datepicker": "^2.7.1",
+    "vue-loading-overlay": "^3.2.0",
+    "vuelidate": "^0.7.4",
+    "vuex": "^3.1.1",
+    "vuex-persist": "^2.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

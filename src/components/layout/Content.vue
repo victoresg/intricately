@@ -26,7 +26,6 @@
               type="text" 
               name="" 
               :class="$v.model.spend.$dirty && $v.model.spend.$invalid ? 'is-invalid' : ''"
-              @focusout="isInvalid"
               id="" 
               class="col-md-6"
               placeholder="e.g. $150,000"
@@ -41,7 +40,6 @@
               type="text" 
               name="" 
               :class="$v.model.ability.$dirty && $v.model.ability.$invalid ? 'is-invalid' : ''"
-              @focusout="isInvalid"
               id="" 
               class="col-md-6"
               placeholder="e.g. $150,000 - $330,000"
@@ -70,6 +68,9 @@
           <div class="content-item p-5 text-center">
             <h3>2</h3>
             <div class="text-center">
+              <p v-for="(item, index) in companyNotes" :key="index">
+                {{ item }}
+              </p>
             </div>
           </div>
         </Tab>
@@ -91,6 +92,7 @@ import Tab from '@/components/layout/Tab'
 import Tabs from '@/components/layout/Tabs'
 import Alert from '@/components/helpers/Alert'
 import { required } from 'vuelidate/lib/validators'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Earn',
@@ -102,6 +104,7 @@ export default {
   },
   data: () => ({
     selected: 't1',
+    companyNotes: '',
     model: {
       name: '',
       spend: '',
@@ -110,7 +113,7 @@ export default {
     },
     items: [
       { title: 'COMPANY DATA', name: 't1', img: 'bus-stop' },
-      { title: 'COMPANY TABLE', name: 't2', img: 'bus' },
+      { title: 'COMPANY NOTES', name: 't2', img: 'bus' },
       { title: 'COMPANY PAGE', name: 't3', img: 'partner' }
     ],
     money: {
@@ -121,13 +124,16 @@ export default {
       masked: false
     }
   }),
-  watch: {
-    "model.quantity": function(value) {
-
-    },
-    "model.ein": function(value) {
+  created() {
+    this.companyNotes = this.getList
+  },
+  watch: { 
+    "model.spend": function(value) {
 
     }
+  },
+  computed: {
+    ...mapGetters(['getList'])
   },
   methods: {
     onSelect (selected) {

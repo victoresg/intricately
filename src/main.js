@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Vuelidate from 'vuelidate'
-import money from 'v-money'
+import store from '@/store'
+import core from './core'
 
-Vue.use(Vuelidate)
-Vue.use(money, {precision: 4})
+core.inject()
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  store,
+  render: h => h(App)
 }).$mount('#app')
