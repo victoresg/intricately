@@ -22,29 +22,33 @@
             <Alert :v="$v.model.name" />
 
             <label class="text-left mt-4">COMPANY SPEND</label>
-            <input 
+            <money 
               type="text" 
               name="" 
               :class="$v.model.spend.$dirty && $v.model.spend.$invalid ? 'is-invalid' : ''"
-              @focusout="$v.model.spend.$touch()"
+              @focusout="isInvalid"
               id="" 
               class="col-md-6"
               placeholder="e.g. $150,000"
               v-model="model.spend"
+              v-bind="money"
             >
+            </money>
             <Alert :v="$v.model.spend" />
 
             <label class="text-left mt-4">COMPANY SPEND ABILITY</label>
-            <input 
+            <money 
               type="text" 
               name="" 
               :class="$v.model.ability.$dirty && $v.model.ability.$invalid ? 'is-invalid' : ''"
-              @focusout="$v.model.ability.$touch()"
+              @focusout="isInvalid"
               id="" 
               class="col-md-6"
               placeholder="e.g. $150,000 - $330,000"
               v-model="model.ability"
+              v-bind="money"
             >
+            </money>
             <Alert :v="$v.model.ability" />
 
             <label class="text-left mt-5">NOTES</label>
@@ -82,17 +86,19 @@
 </template>
 
 <script>
-import Tabs from '@/components/layout/Tabs'
+import { Money } from 'v-money'
 import Tab from '@/components/layout/Tab'
-import { required } from 'vuelidate/lib/validators'
+import Tabs from '@/components/layout/Tabs'
 import Alert from '@/components/helpers/Alert'
+import { required } from 'vuelidate/lib/validators'
 
 export default {
   name: 'Earn',
   components: {
     Tabs,
     Tab,
-    Alert
+    Alert,
+    Money
   },
   data: () => ({
     selected: 't1',
@@ -106,8 +112,23 @@ export default {
       { title: 'COMPANY DATA', name: 't1', img: 'bus-stop' },
       { title: 'COMPANY TABLE', name: 't2', img: 'bus' },
       { title: 'COMPANY PAGE', name: 't3', img: 'partner' }
-    ]
+    ],
+    money: {
+      decimal: ',',
+      thousands: '.',
+      prefix: 'e.g. $ ',
+      precision: 2,
+      masked: false
+    }
   }),
+  watch: {
+    "model.quantity": function(value) {
+
+    },
+    "model.ein": function(value) {
+
+    }
+  },
   methods: {
     onSelect (selected) {
       this.selected = selected
@@ -147,6 +168,7 @@ export default {
         border-radius: 5px;
         border: 1px #b4afb3 solid;
         padding: 0.5rem;
+        outline-style: none;
       }
       .is-invalid {
         border: 1px #ff0000b5 solid;

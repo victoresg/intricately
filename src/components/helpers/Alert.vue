@@ -32,11 +32,12 @@ export default {
 <style lang="scss">
   .span-component {
     position: relative;
+    font-size: 12px;
     span {
       position: absolute;
       left: 0;
       color: #ff0000b5;
-      top: -4px;
+      top: -2px;
     }
   }
 </style>
