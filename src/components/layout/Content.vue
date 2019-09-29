@@ -8,31 +8,69 @@
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br>
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
             </p>
-            <input type="text" name="" id="" class="col-md-6">
-            <input type="text" name="" id="" class="col-md-6">
-            <input type="text" name="" id="" class="col-md-6">
-            <input type="text" name="" id="" class="col-md-6">
+            <label class="text-left mt-5">COMPANY NAME</label>
+            <input 
+              type="text" 
+              name="" 
+              :class="$v.model.name.$dirty && $v.model.name.$invalid ? 'is-invalid' : ''"
+              @focusout="$v.model.name.$touch()"
+              id="" 
+              class="col-md-6"
+              placeholder="e.g. Your Company Name"
+              v-model="model.name"
+            >
+            <Alert :v="$v.model.name" />
 
-            <label class="text-left mt-2">NOTES</label>
+            <label class="text-left mt-4">COMPANY SPEND</label>
+            <input 
+              type="text" 
+              name="" 
+              :class="$v.model.spend.$dirty && $v.model.spend.$invalid ? 'is-invalid' : ''"
+              @focusout="$v.model.spend.$touch()"
+              id="" 
+              class="col-md-6"
+              placeholder="e.g. $150,000"
+              v-model="model.spend"
+            >
+            <Alert :v="$v.model.spend" />
+
+            <label class="text-left mt-4">COMPANY SPEND ABILITY</label>
+            <input 
+              type="text" 
+              name="" 
+              :class="$v.model.ability.$dirty && $v.model.ability.$invalid ? 'is-invalid' : ''"
+              @focusout="$v.model.ability.$touch()"
+              id="" 
+              class="col-md-6"
+              placeholder="e.g. $150,000 - $330,000"
+              v-model="model.ability"
+            >
+            <Alert :v="$v.model.ability" />
+
+            <label class="text-left mt-5">NOTES</label>
             <textarea 
               rows="8" 
+              :class="$v.model.textArea.$dirty && $v.model.textArea.$invalid ? 'is-invalid' : ''"
+              @focusout="$v.model.textArea.$touch()"
               cols="80"
               placeholder="e.g Good Tech Company"
-              v-model="textArea"
+              v-model="model.textArea"
               class="p-2"
             >
             </textarea>
+            <Alert :v="$v.model.textArea" />
+
           </div>
         </Tab>
         <Tab name="t2" :selected="selected">
-          <div class="content-item p-5 mt-5 text-center">
+          <div class="content-item p-5 text-center">
             <h3>2</h3>
             <div class="text-center">
             </div>
           </div>
         </Tab>
         <Tab name="t3" :selected="selected">
-          <div class="content-item p-5 mt-5 text-center">
+          <div class="content-item p-5 text-center">
             <h3>3</h3>
             <div class="text-center">
             </div>
@@ -46,15 +84,24 @@
 <script>
 import Tabs from '@/components/layout/Tabs'
 import Tab from '@/components/layout/Tab'
+import { required } from 'vuelidate/lib/validators'
+import Alert from '@/components/helpers/Alert'
 
 export default {
   name: 'Earn',
   components: {
     Tabs,
-    Tab
+    Tab,
+    Alert
   },
   data: () => ({
     selected: 't1',
+    model: {
+      name: '',
+      spend: '',
+      ability: '',
+      textArea: ''
+    },
     items: [
       { title: 'COMPANY DATA', name: 't1', img: 'bus-stop' },
       { title: 'COMPANY TABLE', name: 't2', img: 'bus' },
@@ -65,24 +112,54 @@ export default {
     onSelect (selected) {
       this.selected = selected
     }
+  },
+    validations () {
+    return {
+      model: {
+        name: {
+          required
+        },
+        spend: {
+          required
+        },
+        ability: {
+          required
+        },
+        textArea: {
+          required
+        }
+      }
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
   .content {
-    min-height: 45rem;
+    min-height: 100vh;
     &-item {
-      border: 1px solid #1d21242e;
+      border: 1px solid #b4afb3;
       border-radius: 5px;
+      label {
+        color: #b4afb3;
+      }
       input {
-        margin: 15px 0;
+        border-radius: 5px;
+        border: 1px #b4afb3 solid;
+        padding: 0.5rem;
+      }
+      .is-invalid {
+        border: 1px #ff0000b5 solid;
+      }
+      ::placeholder {
+        color: #b4afb38c;
+        opacity: 1;
       }
     }
     textarea {
       border-radius: 5px;
       outline-style: none;
-      border: 1px #00000047 solid;
+      border: 1px #b4afb3 solid;
     }
   }
 </style>
