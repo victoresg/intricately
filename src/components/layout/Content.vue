@@ -69,7 +69,7 @@
             <h3>2</h3>
             <div class="text-center">
               <p v-for="(item, index) in companyNotes" :key="index">
-                {{ item }}
+                {{ index }}) {{ item }}
               </p>
             </div>
           </div>
@@ -126,11 +126,6 @@ export default {
   }),
   created() {
     this.companyNotes = this.getList
-  },
-  watch: { 
-    "model.spend": function(value) {
-
-    }
   },
   computed: {
     ...mapGetters(['getList'])

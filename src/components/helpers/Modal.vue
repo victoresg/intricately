@@ -41,6 +41,9 @@ export default {
     currentList: [],
     input: ""
   }),
+  created() {
+    this.currentList = this.list
+  },
   computed: {
     ...mapState(['list'])
   },
