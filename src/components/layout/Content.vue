@@ -22,31 +22,31 @@
             <Alert :v="$v.model.name" />
 
             <label class="text-left mt-4">COMPANY SPEND</label>
-            <money 
+            <input 
               type="text" 
               name="" 
               :class="$v.model.spend.$dirty && $v.model.spend.$invalid ? 'is-invalid' : ''"
+              @focusout="$v.model.spend.$touch()"
               id="" 
               class="col-md-6"
               placeholder="e.g. $150,000"
               v-model="model.spend"
-              v-bind="money"
+              @blur="currencyFormat(model.spend, 2)"
             >
-            </money>
             <Alert :v="$v.model.spend" />
 
             <label class="text-left mt-4">COMPANY SPEND ABILITY</label>
-            <money 
+            <input 
               type="text" 
               name="" 
               :class="$v.model.ability.$dirty && $v.model.ability.$invalid ? 'is-invalid' : ''"
+              @focusout="$v.model.ability.$touch()"
               id="" 
               class="col-md-6"
               placeholder="e.g. $150,000 - $330,000"
               v-model="model.ability"
-              v-bind="money"
+              @blur="currencyFormat(model.spend, 2)"
             >
-            </money>
             <Alert :v="$v.model.ability" />
 
             <label class="text-left mt-5">NOTES</label>
@@ -82,19 +82,18 @@
 </template>
 
 <script>
-import { Money } from 'v-money'
 import Tab from '@/components/layout/Tab'
 import Tabs from '@/components/layout/Tabs'
 import Alert from '@/components/helpers/Alert'
 import { required } from 'vuelidate/lib/validators'
+import { currencyFormat } from '@/helpers/utils'
 
 export default {
   name: 'Content',
   components: {
     Tabs,
     Tab,
-    Alert,
-    Money
+    Alert
   },
   data: () => ({
     selected: 't1',
@@ -109,18 +108,15 @@ export default {
       { title: 'COMPANY DATA', name: 't1', img: 'bus-stop' },
       { title: 'COMPANY TABLE', name: 't2', img: 'bus' },
       { title: 'COMPANY PAGE', name: 't3', img: 'partner' }
-    ],
-    money: {
-      decimal: ',',
-      thousands: '.',
-      prefix: 'e.g. $ ',
-      precision: 2,
-      masked: false
-    }
+    ]
   }),
   methods: {
     onSelect (selected) {
       this.selected = selected
+    },
+    currencyFormat (value, toFixed) {
+      console.log('entrei')
+      return currencyFormat(value, toFixed)
     }
   },
     validations () {

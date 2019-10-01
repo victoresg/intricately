@@ -29,7 +29,6 @@
             <p class="ml-5">Terms and Conditions</p>
             <p class="ml-3">Privacy Policy</p>
           </div>
-          <span class="d-flex justify-content-end">sasa</span>
         </div>
       </div>
     </div>
