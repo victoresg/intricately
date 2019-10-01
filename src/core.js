@@ -1,5 +1,4 @@
 import Vue from 'vue'
-
 import Vuelidate from 'vuelidate'
 import money from 'v-money'
 

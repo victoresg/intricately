@@ -55,6 +55,10 @@ export default {
       }, 200)
     },
     add() {
+      if (!this.input) {
+        alert('Write something!')
+        return
+      }
       this.currentList.push(this.input)
       this.setList(this.currentList)
       this.input = ""

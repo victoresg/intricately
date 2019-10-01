@@ -67,11 +67,6 @@
         <Tab name="t2" :selected="selected">
           <div class="content-item p-5 text-center">
             <h3>2</h3>
-            <div class="text-center">
-              <p v-for="(item, index) in companyNotes" :key="index">
-                {{ index }}) {{ item }}
-              </p>
-            </div>
           </div>
         </Tab>
         <Tab name="t3" :selected="selected">
@@ -92,10 +87,9 @@ import Tab from '@/components/layout/Tab'
 import Tabs from '@/components/layout/Tabs'
 import Alert from '@/components/helpers/Alert'
 import { required } from 'vuelidate/lib/validators'
-import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Earn',
+  name: 'Content',
   components: {
     Tabs,
     Tab,
@@ -113,7 +107,7 @@ export default {
     },
     items: [
       { title: 'COMPANY DATA', name: 't1', img: 'bus-stop' },
-      { title: 'COMPANY NOTES', name: 't2', img: 'bus' },
+      { title: 'COMPANY TABLE', name: 't2', img: 'bus' },
       { title: 'COMPANY PAGE', name: 't3', img: 'partner' }
     ],
     money: {
@@ -124,12 +118,6 @@ export default {
       masked: false
     }
   }),
-  created() {
-    this.companyNotes = this.getList
-  },
-  computed: {
-    ...mapGetters(['getList'])
-  },
   methods: {
     onSelect (selected) {
       this.selected = selected
