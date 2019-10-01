@@ -105,9 +105,9 @@ export default {
       textArea: ''
     },
     items: [
-      { title: 'COMPANY DATA', name: 't1', img: 'bus-stop' },
-      { title: 'COMPANY TABLE', name: 't2', img: 'bus' },
-      { title: 'COMPANY PAGE', name: 't3', img: 'partner' }
+      { title: 'COMPANY DATA', name: 't1' },
+      { title: 'COMPANY TABLE', name: 't2' },
+      { title: 'COMPANY PAGE', name: 't3' }
     ]
   }),
   methods: {
