@@ -22,7 +22,8 @@
             <Alert :v="$v.model.name" />
 
             <label class="text-left mt-4">COMPANY SPEND</label>
-            <input 
+            <money 
+              v-bind="money"
               type="text" 
               name="" 
               :class="$v.model.spend.$dirty && $v.model.spend.$invalid ? 'is-invalid' : ''"
@@ -31,14 +32,14 @@
               class="col-md-6"
               placeholder="e.g. $150,000"
               v-model="model.spend"
-              @blur="currencySpend(model.spend, 2)"
-              @focus="clearSpend()"
             >
+            </money>
             <Alert :v="$v.model.spend" />
 
             <label class="text-left mt-4">COMPANY SPEND ABILITY</label>
             <div class="ability d-flex flex-column justufy-content-start">
-              <input 
+              <money 
+                v-bind="money"
                 type="text" 
                 name="" 
                 :class="$v.model.ability.$dirty && $v.model.ability.$invalid || spanAlert ? 'is-invalid' : ''"
@@ -47,11 +48,14 @@
                 class="col-md-6"
                 placeholder="e.g. $150,000 - $330,000"
                 v-model="model.ability"
-                @blur="currencyAbility(model.ability, 2)"
-                @focus="clearAbility()"
               >
+              </money>
               <span v-if="spanAlert" class="span-alert">COMPANY EXPENSES MUST BE LESS THAN SPEND ABILITY</span>
               <Alert :v="$v.model.ability" />
+              <div class="current-value d-flex mt-5">
+                <button @click="_amountToPay" class=" mr-5">Calculate</button>
+                <span>{{ amountToPay }}</span>
+              </div>
             </div>
 
             <label class="text-left mt-5">NOTES</label>
@@ -92,15 +96,19 @@ import Tabs from '@/components/layout/Tabs'
 import Alert from '@/components/helpers/Alert'
 import { required } from 'vuelidate/lib/validators'
 import { currencyFormat } from '@/helpers/utils'
+import { Money } from 'v-money'
+import validators from "@/helpers/validators"
 
 export default {
   name: 'Content',
   components: {
     Tabs,
     Tab,
-    Alert
+    Alert,
+    Money
   },
   data: () => ({
+    amountToPay: '',
     spanAlert: false,
     selected: 't1',
     companyNotes: '',
@@ -110,6 +118,13 @@ export default {
       ability: '',
       textArea: ''
     },
+    money: {
+      decimal: ',',
+      thousands: '.',
+      prefix: '$ ',
+      precision: 2,
+      masked: false
+      },
     items: [
       { title: 'COMPANY DATA', name: 't1' },
       { title: 'COMPANY TABLE', name: 't2' },
@@ -117,21 +132,12 @@ export default {
     ]
   }),
   methods: {
-    clearSpend () {
-      this.model.spend = Number(this.model.spend.replace(/\./g, '').replace(',', '.'))
-    },
-    clearAbility () {
-      this.model.ability = Number(this.model.ability.replace(/\./g, '').replace(',', '.'))
-    },
-    currencySpend(value, toFixed) {
-      if (!this.model.spend) return
-      const formatSpend = currencyFormat(value, toFixed)
-      this.model.spend = formatSpend
-    },
-    currencyAbility(value, toFixed) {
-      if (!this.model.ability) return
-      const formatAbility = currencyFormat(value, toFixed)
-      this.model.ability = formatAbility
+    _amountToPay () {
+      const { $v } = this
+      $v.$touch()
+      if ($v.$invalid) return
+      const { spend, ability } = this.model
+      this.amountToPay = `$ ${ability - spend}`
     },
     onSelect (selected) {
       this.selected = selected
@@ -143,11 +149,9 @@ export default {
   watch: {
     'model.ability': function () {
       const { spend, ability } = this.model
-      const newSpend = Number(spend.replace(/\./g, '').replace(',', '.'))
-      const newAbility = Number(ability.replace(/\./g, '').replace(',', '.'))
-      if (newAbility < newSpend) this.spanAlert = true
-      if (newAbility >= newSpend) this.spanAlert = false
-      if (!newAbility) this.spanAlert = false
+      if (ability < spend) this.spanAlert = true
+      if (ability >= spend) this.spanAlert = false
+      if (!ability) this.spanAlert = false
     }
   },
     validations () {
@@ -157,10 +161,12 @@ export default {
           required
         },
         spend: {
-          required
+          required,
+          greaterThenZero: value => validators.greaterThenZeroValidator(value)
         },
         ability: {
-          required
+          required,
+          greaterThenZero: value => validators.greaterThenZeroValidator(value)
         },
         textArea: {
           required
@@ -206,6 +212,19 @@ export default {
         left: 0;
         color: #ff0000b5;
         top: 38px;
+      }
+    }
+    .current-value {
+      button {
+        background-color: #5d699a;
+        border-radius: 5px;
+        border: none;
+        color: #ffff;
+        outline-style: none;
+        cursor: pointer;
+      }
+      span {
+        border-bottom: 1px #b4afb3 solid;
       }
     }
   }

@@ -1,4 +1,4 @@
 export default {
   required: () => 'Required field',
-  greaterThenZero: () => '',
+  greaterThenZero: () => 'value must be greater than $ 0,00',
 }
