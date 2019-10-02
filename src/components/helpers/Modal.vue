@@ -114,4 +114,11 @@ export default {
       }
     }
   }
-</style>
+  @media(max-width: 768px) {
+    .modal {
+      .body {
+        max-width: 25rem;
+      }
+    }
+  }
+ </style>
