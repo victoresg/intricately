@@ -31,23 +31,28 @@
               class="col-md-6"
               placeholder="e.g. $150,000"
               v-model="model.spend"
-              @blur="currencyFormat(model.spend, 2)"
+              @blur="currencySpend(model.spend, 2)"
+              @focus="clearSpend()"
             >
             <Alert :v="$v.model.spend" />
 
             <label class="text-left mt-4">COMPANY SPEND ABILITY</label>
-            <input 
-              type="text" 
-              name="" 
-              :class="$v.model.ability.$dirty && $v.model.ability.$invalid ? 'is-invalid' : ''"
-              @focusout="$v.model.ability.$touch()"
-              id="" 
-              class="col-md-6"
-              placeholder="e.g. $150,000 - $330,000"
-              v-model="model.ability"
-              @blur="currencyFormat(model.spend, 2)"
-            >
-            <Alert :v="$v.model.ability" />
+            <div class="ability d-flex flex-column justufy-content-start">
+              <input 
+                type="text" 
+                name="" 
+                :class="$v.model.ability.$dirty && $v.model.ability.$invalid || spanAlert ? 'is-invalid' : ''"
+                @focusout="$v.model.ability.$touch()"
+                id="" 
+                class="col-md-6"
+                placeholder="e.g. $150,000 - $330,000"
+                v-model="model.ability"
+                @blur="currencyAbility(model.ability, 2)"
+                @focus="clearAbility()"
+              >
+              <span v-if="spanAlert" class="span-alert">COMPANY EXPENSES MUST BE LESS THAN SPEND ABILITY</span>
+              <Alert :v="$v.model.ability" />
+            </div>
 
             <label class="text-left mt-5">NOTES</label>
             <textarea 
@@ -96,6 +101,7 @@ export default {
     Alert
   },
   data: () => ({
+    spanAlert: false,
     selected: 't1',
     companyNotes: '',
     model: {
@@ -111,12 +117,37 @@ export default {
     ]
   }),
   methods: {
+    clearSpend () {
+      this.model.spend = Number(this.model.spend.replace(/\./g, '').replace(',', '.'))
+    },
+    clearAbility () {
+      this.model.ability = Number(this.model.ability.replace(/\./g, '').replace(',', '.'))
+    },
+    currencySpend(value, toFixed) {
+      if (!this.model.spend) return
+      const formatSpend = currencyFormat(value, toFixed)
+      this.model.spend = formatSpend
+    },
+    currencyAbility(value, toFixed) {
+      if (!this.model.ability) return
+      const formatAbility = currencyFormat(value, toFixed)
+      this.model.ability = formatAbility
+    },
     onSelect (selected) {
       this.selected = selected
     },
     currencyFormat (value, toFixed) {
-      console.log('entrei')
       return currencyFormat(value, toFixed)
+    }
+  },
+  watch: {
+    'model.ability': function () {
+      const { spend, ability } = this.model
+      const newSpend = Number(spend.replace(/\./g, '').replace(',', '.'))
+      const newAbility = Number(ability.replace(/\./g, '').replace(',', '.'))
+      if (newAbility < newSpend) this.spanAlert = true
+      if (newAbility >= newSpend) this.spanAlert = false
+      if (!newAbility) this.spanAlert = false
     }
   },
     validations () {
@@ -167,6 +198,15 @@ export default {
       border-radius: 5px;
       outline-style: none;
       border: 1px #b4afb3 solid;
+    }
+    .ability {
+      position: relative;
+      .span-alert {
+        position: absolute;
+        left: 0;
+        color: #ff0000b5;
+        top: 38px;
+      }
     }
   }
 </style>

@@ -1,3 +1,4 @@
 export default {
-  required: () => 'Required field'
+  required: () => 'Required field',
+  greaterThenZero: () => '',
 }
