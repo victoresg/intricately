@@ -19,7 +19,13 @@ export default {
 </script>
 
 <style>
-#app {
-  height: 100vh;
+* { outline: none !important; }
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    margin: 0;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
 </style>

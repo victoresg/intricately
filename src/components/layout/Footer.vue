@@ -20,7 +20,7 @@
               Help Canter 
             </li>
           </ul>
-          <p class="copy-right pl-5 pr-5">© Copyright 2017, Intricately, Inc. All Rights Reserved.</p>
+          <p class="copy-right pl-5 pr-5">© Copyright 2020</p>
         </div>
       </div>
       <div class="col-md-6 d-flex justify-content-center">
@@ -43,14 +43,16 @@ export default {
 
 <style lang="scss" scoped>
   .footer {
-    background-color: #c8c3c729;
+    position: absolute;
+    bottom: 0;
+    background-color: #42b983;
     width: 100%;
     &-list {
-    color: #5D679A;
+    color: #ffff;
       list-style: none;
       padding-inline-start: 0px;
       li {
-        border-right: 1px solid #5D679A;
+        border-right: 1px solid #ffff;
         padding-right: 15px;
       }
       li:nth-child(5) {
@@ -58,13 +60,13 @@ export default {
       }
     }
     .copy-right {
-      color: #b4afb3;
+      color: #ffffff;
     }
     p {
-      color: #5D679A;
+      color: #ffff;
     }
     p:nth-child(1) {
-      border-right: 1px solid #5D679A;
+      border-right: 1px solid #ffff;
       padding-right: 1rem;
     }
   }

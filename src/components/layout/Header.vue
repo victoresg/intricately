@@ -1,21 +1,18 @@
 <template>
-  <header class="row">
-    <div class="header col-12 p-4 d-flex justify-content-start flex-row">
-      <Modal :show="showModal" @close="closeModal" />
-      <img src="https://assets.website-files.com/5938780be60b2223c6c362fd/5971e9b249826a6c5672a208_logo-full.svg" width="220" alt="intricately" class="ml-3 mr-3 mr-md-5">
-      <div class="col-3 d-flex flex-md-row align-items-center justify-content-between">
-        <span class="mr-4 mr-md-0">
-          <router-link to="/">
-            HOME
-          </router-link>
-        </span>
-        <button @click="setModal" class="header-btn mr-4 mr-md-0 p-md-2">NEW SMARTLIST</button>
-        <button @click="redirect" class="header-btn p-md-2">     
-          <router-link to="/notes">
-            NOTES
-          </router-link>
-        </button>
-      </div>
+  <header>
+    <Modal :show="showModal" @close="closeModal" />
+    <div class="header-content">
+      <span class="mr-4 mr-md-0">
+        <router-link to="/">
+          HOME
+        </router-link>
+      </span>
+      <button @click="setModal" class="header-content-btn mr-4 mr-md-0 p-md-2">NEW SMARTLIST</button>
+      <button @click="redirect" class="header-content-btn p-md-2">     
+        <router-link to="/notes">
+          NOTES
+        </router-link>
+      </button>
     </div>
   </header> 
 </template>
@@ -52,21 +49,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .header {
-    a {
-      color: #fff;
-    }
-    background-color: #394783;
-    &-btn {
-      background-color: #5d699a;
-      border-radius: 5px;
-      border: none;
-      color: #ffff; 
-      outline-style: none;
-      cursor: pointer;
-      &:active {
-        box-shadow: inset 0 0 1em #1d21249e, 0 0 1em #1d21243d;
+  header {
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    width: 100%;
+    background-color: #42b983;
+    height: 80px;
+    .header-content {
+      display: flex ;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      &-btn {
+        background-color: #42b983;
+        border-radius: 5px;
+        border: none;
+        color: #ffff; 
+        outline-style: none;
+        cursor: pointer;
+        &:active {
+          box-shadow: inset 0 0 1em #1d21249e, 0 0 1em #1d21243d;
+        }
       }
+    }
+    a {
+      color: #ffff;
     }
   }
   @media(max-width: 768px) {

@@ -8,6 +8,6 @@ import 'vue-airbnb-style-datepicker/dist/vue-airbnb-style-datepicker.min.css'
 export default {
   inject: () => {
     Vue.use(Vuelidate)
-    Vue.use(money, {precision: 4})
+    Vue.use(money, { precision: 4 })
   }
 }
