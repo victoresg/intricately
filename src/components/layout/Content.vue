@@ -16,6 +16,18 @@ export default {
   data: () => ({
 
   }),
+  beforeCreate() {
+    alert('beforeCreate')
+  },
+  created() {
+    alert('created')
+  },
+  beforeMount() {
+    alert('beforeMount')
+  },
+  mounted() {
+    alert('mounted')
+  },
   methods: {
 
   },

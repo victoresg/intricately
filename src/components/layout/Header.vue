@@ -52,7 +52,7 @@ export default {
   header {
     display: flex;
     align-items: center;
-    padding: 0 50px;
+    padding: 0 220px;
     width: 100%;
     background-color: #42b983;
     height: 80px;
