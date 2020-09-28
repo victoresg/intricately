@@ -1,6 +1,6 @@
 <template>
   <footer class="footer d-none d-md-block">
-    <div class="row">
+    <div class="row no-gutters">
       <div class="col-md-6 d-flex justify-content-center">
         <div class="d-flex flex-column justify-content-center mr-5">
           <ul class="footer-list d-flex flex-row pl-5 pr-5">

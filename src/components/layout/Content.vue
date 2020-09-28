@@ -2,7 +2,7 @@
   <main>
     <div class="content p-3">
      <div>
-       olá
+       {{ test }}
      </div>
     </div>
   </main>
@@ -14,22 +14,31 @@
 export default {
   name: 'Content',
   data: () => ({
-
+    test: 'inicializou o data()'
   }),
   beforeCreate() {
-    alert('beforeCreate')
+    this.test = 'inicializou beforeCreate()'
+    console.log('inicializou beforeCreate()')
+    // this._testFunc()
   },
   created() {
-    alert('created')
+    this.test = 'inicializou created()'
+    console.log('inicializou created()')
+    this._testFunc()
   },
   beforeMount() {
-    alert('beforeMount')
+    this.test = 'inicializou beforeMount()'
+    console.log('inicializou beforeMount()')
   },
   mounted() {
-    alert('mounted')
+    this.test = 'inicializou mounted()'
+    console.log('inicializou mounted()')
   },
   methods: {
-
+    _testFunc() {
+      console.log('evento_teste')
+      this.$emit('evento_teste')
+    }
   },
   watch: {
 
